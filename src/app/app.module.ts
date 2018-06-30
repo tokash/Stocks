@@ -2,15 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { StockDataModelComponent } from './stock-data-model/stock-data-model.component';
+import { StockDataServiceService } from './Services/stock-data-service.service';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StockDataModelComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [StockDataServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

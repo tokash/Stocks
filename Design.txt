@@ -1,0 +1,13 @@
+Show list of stocks
+when stock is clicked, its data will be shown according to current data (from yahoo) and historical data
+The data will be shown by using graphs.
+
+Data to show:
+-Current Price
+-Volume
+-Liquidation value according to latest quarterly report
+-
+
+Challenges:
+-Implement Graphs
+
