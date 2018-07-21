@@ -16,12 +16,14 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    this._stockDataService.getStockData('024 PHARMA, INC.')
+    this._stockDataService.getStockData('APPLE INC')
     .subscribe(res => {
-      let stockData = res;
+      this.stockData = res;
 
-      //console.log(res);
+      console.log(res);
     });
+
+
   }
 
 }

@@ -8,6 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class StockDataModelComponent {
   tag: string;
   value: number;
-  name: string;
+  date: string;
   quarter: number;
 }
