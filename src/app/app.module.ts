@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { StockDataModelComponent } from './stock-data-model/stock-data-model.component';
 import { StockDataServiceService } from './Services/stock-data-service.service';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { StocksNavbarComponent } from './Components/stocks-navbar/stocks-navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StockDataModelComponent
+    StockDataModelComponent,
+    StocksNavbarComponent
   ],
   imports: [
     BrowserModule,
