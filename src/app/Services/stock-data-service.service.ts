@@ -17,4 +17,11 @@ export class StockDataServiceService {
 
     return res.map(result => result as StockDataModelComponent[] || []);
     }
+
+    getCompanies(): Observable<any[]> {
+      const res = this._http.get('http://localhost:3003/companies/20');
+      //console.log(res);
+  
+      return res.map(result => result as String[] || []);
+      }
 }

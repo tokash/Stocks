@@ -6,12 +6,14 @@ import { StockDataModelComponent } from './stock-data-model/stock-data-model.com
 import { StockDataServiceService } from './Services/stock-data-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StocksNavbarComponent } from './Components/stocks-navbar/stocks-navbar.component';
+import { StocksTableComponent } from './Components/stocks-table/stocks-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StockDataModelComponent,
-    StocksNavbarComponent
+    StocksNavbarComponent,
+    StocksTableComponent
   ],
   imports: [
     BrowserModule,
