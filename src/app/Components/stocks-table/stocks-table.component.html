@@ -6,7 +6,7 @@
       </thead>
       <tbody class="tbody">
           <tr *ngFor="let stock of stocksData">
-              <a href="#"> <td>{{stock.name}}</td></a>
+              <a routerLink= "{{'/stock-data/' + stock.name}}"> <td>{{stock.name}}</td></a>
           </tr>
       </tbody>
   </table>
