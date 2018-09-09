@@ -1,3 +1,47 @@
-<p>
-  stock-data works!
-</p>
+<html>
+<body ng-app = "StocksApp">
+    <form class="form-inline">
+    <div id="form-group" class="form-group">
+        <div class="form-group">
+            <div id="left" class="input-group">
+                <label for="dpStartDate" id="label-date">Start date:</label>
+                <input id="dpStartDate" class="form-control" placeholder="yyyy-mm-dd"
+                        name="dpStart" [(ngModel)]="model" ngbDatepicker #dStart="ngbDatepicker">
+                <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="dStart.toggle()" type="button">
+                    <img src="../../../assets/calendar.png" width="20" />
+                </button>
+                </div>
+            </div>
+        
+            <div id="right" class="input-group">
+                <label for="dpEndDate" id="label-date">End date:</label>
+                <input id="dpEndDate" class="form-control" placeholder="yyyy-mm-dd"
+                        name="dpEnd" [(ngModel)]="model" ngbDatepicker #dEnd="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="dEnd.toggle()" type="button">
+                        <img src="../../../assets/calendar.png" width="20" />
+                    </button>
+                </div>
+                </div>
+        </div>
+    </div>
+    </form>
+    <div id="default-backdata">
+        <span>
+        By default getting data for 3 years back
+        </span>
+    </div>
+
+    <div *ngIf="chart">
+        <div class="chart-container" style="position: relative; height:200px; width:1000px">
+            <canvas id="canvas">{{chart}}</canvas>
+        </div>
+    </div>
+    
+    <script src="node_modules/chart.js/Chart.min.js"></script>
+    <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script> angular.module('StocksApp', ['canvas']); </script>
+
+</body>
+</html>

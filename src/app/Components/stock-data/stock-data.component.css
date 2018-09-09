@@ -1,0 +1,30 @@
+#left{
+    float: left;
+    margin-left: 10px;
+    margin-right: 40px;
+}
+#right{
+   float: left;
+}
+
+#form-group{
+    padding-top: 20px;
+}
+
+#label-date{
+    font-size: 16pt;
+    padding-right: 5pt;
+}
+
+#default-backdata{
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+#canvas{
+    padding-top: 100px;
+}
+
+/* body {
+    background-color: whitesmoke;
+} */

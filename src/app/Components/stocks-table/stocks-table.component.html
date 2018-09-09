@@ -6,7 +6,8 @@
       </thead>
       <tbody class="tbody">
           <tr *ngFor="let stock of stocksData">
-              <a routerLink= "{{'/stock-data/' + stock.name}}"> <td>{{stock.name}}</td></a>
+                <!-- + stock.name -->
+              <a class="nav-link" routerLink= "{{'/stock-data'}}" [queryParams]="{stock_name: stock.name}"> <td>{{stock.name}}</td></a> 
           </tr>
       </tbody>
   </table>
