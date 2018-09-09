@@ -24,4 +24,6 @@ export class StocksTableComponent implements OnInit {
     });
   }
 
+  
+
 }
