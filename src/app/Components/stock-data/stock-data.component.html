@@ -33,15 +33,35 @@
         </span>
     </div>
 
-    <div *ngIf="chart">
-        <div class="chart-container" style="position: relative; height:200px; width:900px">
+    <!-- <div class="chart-container" style="height:200px; width:900px">
             <canvas id="canvas">{{chart}}</canvas>
-        </div>
+    </div> -->
+
+    <!-- position: relative -->
+    <div class="chart-container" style="height:200px; width:900px">
+            <canvas id="canvasGrossProfit">{{chartGrossProfit}}</canvas>
     </div>
+
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <div *ngIf="chart">
+                    <div class="chart-container" style="position: relative; height:200px; width:900px">
+                        <canvas id="canvas">{{chart}}</canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container" style="position: relative; height:200px; width:900px">
+            <canvas id="canvasGrossProfit">{{chartGrossProfit}}</canvas>
+        </div>
+    </div> -->
+    
     
     <script src="node_modules/chart.js/Chart.min.js"></script>
     <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
     <script> angular.module('StocksApp', ['canvas']); </script>
+    <script> angular.module('StocksApp', ['canvasGrossProfit']); </script>
 
 </body>
 </html>

@@ -25,6 +25,10 @@
     padding-top: 100px;
 }
 
+#chart-container{
+    display: inline-block;
+    padding-top: 200px;
+}
 /* body {
     background-color: whitesmoke;
 } */

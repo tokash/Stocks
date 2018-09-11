@@ -17,15 +17,15 @@ export class StockDataServiceService {
 
     params = params.append('Company', company);
 
-    const res = this._http.get('http://localhost:3003/company', {headers, params});
-    console.log(res);
+    const res = this._http.get('http://localhost:3003/company/', {headers, params});
 
-    return res.map(result => result as StockDataModelComponent[] || []);
+    //console.log(res);
+    //return res.map(result => result as StockDataModelComponent[] || []);
+    return res.map(result => result as Array<[string, StockDataModelComponent[]]> || []);
     }
 
     getCompanies(): Observable<any[]> {
-      const res = this._http.get('http://localhost:3003/companies/20');
-      //console.log(res);
+      const res = this._http.get('http://localhost:3003/companies/100');
   
       return res.map(result => result as String[] || []);
       }

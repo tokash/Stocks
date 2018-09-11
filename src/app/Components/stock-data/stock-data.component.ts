@@ -1,9 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import * as _ from 'lodash';
 
 import { WeatherService } from '../../Services/weather.service';
 import {Chart} from 'chart.js'
 import { StockDataServiceService } from '../../Services/stock-data-service.service';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { StockDataModelComponent } from '../../stock-data-model/stock-data-model.component';
 
 @Component({
   selector: 'app-stock-data',
@@ -12,7 +14,10 @@ import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 })
 export class StockDataComponent implements OnInit {
   chart = [];
+  chartGrossProfit = [];
   paramStockName = '';
+  stockData = [];
+  stockDataByTag = [];
 
   constructor(private _route: ActivatedRoute,
               private _weather: WeatherService,
@@ -25,8 +30,40 @@ export class StockDataComponent implements OnInit {
     //console.log(this.paramStockName)
      this._stockData.getStockData(this.paramStockName)
       .subscribe(res => {
-        console.log(res)
+        this.stockData = res
+        this.CreateTagArray('GrossProfit');
+        this.CreateTagArray('NetIncomeLoss');
+
+        let grossProfitData = this.GetDataArray('GrossProfit', this.stockDataByTag);
+        let netIncomeLossData = this.GetDataArray('NetIncomeLoss', this.stockDataByTag);
+
+        let grossProfitProcessedData = this.CreateArrayOfData(grossProfitData)
+        let netIncomeLossProcessedData = this.CreateArrayOfData(netIncomeLossData)
+
+        let chartGrossProfit = new Chart('canvasGrossProfit', {
+          type: 'bar',
+          data  : {
+            labels: netIncomeLossProcessedData[1],
+            datasets: [
+              {
+                label: 'Net Income',
+                data: netIncomeLossProcessedData[0],
+                borderColor: '#3cbb9f',
+                fill: 'false'
+              },
+            ],
+          }
+        });
+
+        // for (let quarterData of this.stockData ){
+        //   //console.log(quarterData)
+        //   for(let i in quarterData){
+        //     console.log(quarterData[i])
+        //   }
+        // }
      })
+
+     //console.log(this.stockDataByTag)
 
     this._weather.dailyForecast()
     .subscribe(res => {
@@ -38,7 +75,7 @@ export class StockDataComponent implements OnInit {
       let pressure = res['list'].map(res => res.main.pressure)
       let allDates = res['list'].map(res => res.dt)
 
-      // console.log(temp)
+      //console.log(temp)
       // console.log(temp_max)
       // console.log(temp_min)
       // console.log(pressure)
@@ -105,8 +142,58 @@ export class StockDataComponent implements OnInit {
           }
         }
       });
-
     })
   }
 
+  GetDataArray(tag: string, arr: any[]){
+    for(let i in arr){
+      let currArr = Object.values(arr[i])[1]
+
+      if(currArr[0].tag == tag){
+        return currArr;
+      }
+    }
+  }
+
+  CreateArrayOfData(arr: any[]){
+    let data = [];
+    let dates = [];
+
+    if (arr != null){
+      for(let i in arr){
+        data.push(parseInt(arr[i].value));
+        dates.push(arr[i].ddate);
+      }  
+    }
+    
+    // console.log(data)
+    // console.log(dates)
+
+    return [data.reverse(), dates.reverse()];
+  }
+
+  CreateTagArray(tag: string){
+    let data = []
+
+    if (this.stockData != null){
+      //console.log(this.stockData)
+
+      for(let i in this.stockData){
+        let currArray = Object.values(this.stockData[i])[1]
+        for(let j in currArray){
+          data.push(currArray[j])
+        }
+      }
+
+      //This data should go into the graph
+      let tagData = _.filter(data, function(o) { return o.tag == tag && o.quarter == 1; });    
+
+      if(tagData != null){
+        this.stockDataByTag.push([tag, tagData]);
+      }
+      
+      //console.log(tagData);    
+    }
+  }
+  
 }
