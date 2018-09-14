@@ -37,8 +37,8 @@ export class StockDataComponent implements OnInit {
         let grossProfitData = this.GetDataArray('GrossProfit', this.stockDataByTag);
         let netIncomeLossData = this.GetDataArray('NetIncomeLoss', this.stockDataByTag);
 
-        let grossProfitProcessedData = this.CreateArrayOfData(grossProfitData)
-        let netIncomeLossProcessedData = this.CreateArrayOfData(netIncomeLossData)
+        let grossProfitProcessedData = this.CreateArrayOfData(grossProfitData as any[])
+        let netIncomeLossProcessedData = this.CreateArrayOfData(netIncomeLossData as any[])
 
         let chartGrossProfit = new Chart('canvasGrossProfit', {
           type: 'bar',
@@ -49,9 +49,27 @@ export class StockDataComponent implements OnInit {
                 label: 'Net Income',
                 data: netIncomeLossProcessedData[0],
                 borderColor: '#3cbb9f',
-                fill: 'false'
+                backgroundColor:'#3cbb9f',
+                fill: 'true'
               },
             ],
+          },
+          options:{
+            responsive: true,
+            maintainAspectRatio: true,
+            title: {
+              display: true,
+              position: "top",
+              text: 'Net Income for ' + this.paramStockName,
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: true,
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
           }
         });
 
@@ -63,12 +81,10 @@ export class StockDataComponent implements OnInit {
         // }
      })
 
-     //console.log(this.stockDataByTag)
-
+     
     this._weather.dailyForecast()
     .subscribe(res => {
-      //console.log(res)
-
+     
       let temp = res['list'].map(res => res.main.temp)
       // let temp_max = res['list'].map(res => res.main.temp_max)
       // let temp_min = res['list'].map(res => res.main.temp_min)
@@ -105,41 +121,23 @@ export class StockDataComponent implements OnInit {
               fill: 'false'
             },
           ],
-          options:{
-            responsive: true,
-            // legend: {
-            //   display: false,
-            // },
-            title: {
-              display: true,
-              position: "top",
-              text: "Moscow Temp. & Pressure",
-            },
-            // tooltips: {
-            //   mode: 'index',
-            //   intersect: true,
-            // },
-            // hover: {
-            //   mode: 'nearest',
-            //   intersect: true
-            // },
-            // scales: {
-            //   xAxes: [{
-            //     display: true,
-            //     scaleLabel: {
-            //       display: true,
-            //       labelString: 'Month'
-            //     }
-            //   }],
-            //   yAxes: [{
-            //     display: true,
-            //     scaleLabel: {
-            //       display: true,
-            //       labelString: 'Value'
-            //     }
-            //   }]
-            // }
-          }
+        },
+        options:{
+          responsive: true,
+          maintainAspectRatio: true,
+          title: {
+            display: true,
+            position: "top",
+            text: "Moscow Temp. & Pressure",
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: true,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
         }
       });
     })
