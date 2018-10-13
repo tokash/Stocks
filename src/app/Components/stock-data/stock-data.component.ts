@@ -18,6 +18,8 @@ export class StockDataComponent implements OnInit {
   paramStockName = '';
   stockData = [];
   stockDataByTag = [];
+  modelStart;
+  modelEnd;
 
   constructor(private _route: ActivatedRoute,
               private _weather: WeatherService,
@@ -37,41 +39,46 @@ export class StockDataComponent implements OnInit {
         let grossProfitData = this.GetDataArray('GrossProfit', this.stockDataByTag);
         let netIncomeLossData = this.GetDataArray('NetIncomeLoss', this.stockDataByTag);
 
-        let grossProfitProcessedData = this.CreateArrayOfData(grossProfitData as any[])
-        let netIncomeLossProcessedData = this.CreateArrayOfData(netIncomeLossData as any[])
-
-        let chartGrossProfit = new Chart('canvasGrossProfit', {
-          type: 'bar',
-          data  : {
-            labels: netIncomeLossProcessedData[1],
-            datasets: [
-              {
-                label: 'Net Income',
-                data: netIncomeLossProcessedData[0],
-                borderColor: '#3cbb9f',
-                backgroundColor:'#3cbb9f',
-                fill: 'true'
+        if(grossProfitData &&
+           netIncomeLossData)
+           {
+            let grossProfitProcessedData = this.CreateArrayOfData(grossProfitData as any[])
+            let netIncomeLossProcessedData = this.CreateArrayOfData(netIncomeLossData as any[])
+    
+            let chartGrossProfit = new Chart('canvasGrossProfit', {
+              type: 'bar',
+              data  : {
+                labels: netIncomeLossProcessedData[1],
+                datasets: [
+                  {
+                    label: 'Net Income',
+                    data: netIncomeLossProcessedData[0],
+                    borderColor: '#3cbb9f',
+                    backgroundColor:'#3cbb9f',
+                    fill: 'true'
+                  },
+                ],
               },
-            ],
-          },
-          options:{
-            responsive: true,
-            maintainAspectRatio: true,
-            title: {
-              display: true,
-              position: "top",
-              text: 'Net Income for ' + this.paramStockName,
-            },
-            tooltips: {
-              mode: 'index',
-              intersect: true,
-            },
-            hover: {
-              mode: 'nearest',
-              intersect: true
-            },
-          }
-        });
+              options:{
+                responsive: true,
+                maintainAspectRatio: true,
+                title: {
+                  display: true,
+                  position: "top",
+                  text: 'Net Income for ' + this.paramStockName,
+                },
+                tooltips: {
+                  mode: 'index',
+                  intersect: true,
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+              }
+            });
+           }
+        
 
         // for (let quarterData of this.stockData ){
         //   //console.log(quarterData)
@@ -82,75 +89,88 @@ export class StockDataComponent implements OnInit {
      })
 
      
-    this._weather.dailyForecast()
-    .subscribe(res => {
+    // this._weather.dailyForecast()
+    // .subscribe(res => {
      
-      let temp = res['list'].map(res => res.main.temp)
-      // let temp_max = res['list'].map(res => res.main.temp_max)
-      // let temp_min = res['list'].map(res => res.main.temp_min)
-      let pressure = res['list'].map(res => res.main.pressure)
-      let allDates = res['list'].map(res => res.dt)
+    //   let temp = res['list'].map(res => res.main.temp)
+    //   // let temp_max = res['list'].map(res => res.main.temp_max)
+    //   // let temp_min = res['list'].map(res => res.main.temp_min)
+    //   let pressure = res['list'].map(res => res.main.pressure)
+    //   let allDates = res['list'].map(res => res.dt)
 
-      //console.log(temp)
-      // console.log(temp_max)
-      // console.log(temp_min)
-      // console.log(pressure)
+    //   //console.log(temp)
+    //   // console.log(temp_max)
+    //   // console.log(temp_min)
+    //   // console.log(pressure)
 
-      let weatherDates = []
-      allDates.forEach((res) => {
-        let jsdate = new Date(res * 1000)
-        weatherDates.push(jsdate.toLocaleTimeString('en', {year: 'numeric', month: 'short', day: 'numeric'}))
-      });
+    //   let weatherDates = []
+    //   allDates.forEach((res) => {
+    //     let jsdate = new Date(res * 1000)
+    //     weatherDates.push(jsdate.toLocaleTimeString('en', {year: 'numeric', month: 'short', day: 'numeric'}))
+    //   });
 
-      //console.log(weatherDates);
-      let chart = new Chart('canvas', {
-        type: 'line',
-        data  : {
-          labels: weatherDates,
-          datasets: [
-            {
-              label: "Average Temp.",
-              data: temp,
-              borderColor: '#3cbb9f',
-              fill: 'false'
-            },
-            {
-              label: "Pressure",
-              data: pressure,
-              borderColor: '#ccff00',
-              fill: 'false'
-            },
-          ],
-        },
-        options:{
-          responsive: true,
-          maintainAspectRatio: true,
-          title: {
-            display: true,
-            position: "top",
-            text: "Moscow Temp. & Pressure",
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: true,
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-        }
-      });
-    })
+    //   //console.log(weatherDates);
+    //   let chart = new Chart('canvas', {
+    //     type: 'line',
+    //     data  : {
+    //       labels: weatherDates,
+    //       datasets: [
+    //         {
+    //           label: "Average Temp.",
+    //           data: temp,
+    //           borderColor: '#3cbb9f',
+    //           fill: 'false'
+    //         },
+    //         {
+    //           label: "Pressure",
+    //           data: pressure,
+    //           borderColor: '#ccff00',
+    //           fill: 'false'
+    //         },
+    //       ],
+    //     },
+    //     options:{
+    //       responsive: true,
+    //       maintainAspectRatio: true,
+    //       title: {
+    //         display: true,
+    //         position: "top",
+    //         text: "Moscow Temp. & Pressure",
+    //       },
+    //       tooltips: {
+    //         mode: 'index',
+    //         intersect: true,
+    //       },
+    //       hover: {
+    //         mode: 'nearest',
+    //         intersect: true
+    //       },
+    //     }
+    //   });
+    // })
   }
 
   GetDataArray(tag: string, arr: any[]){
-    for(let i in arr){
-      let currArr = Object.values(arr[i])[1]
+    //console.log(arr);
 
-      if(currArr[0].tag == tag){
-        return currArr;
+    if(arr != null)
+    {
+      for(let i in arr){
+        let currArr = Object.values(arr[i])[1]
+  
+        //console.log(currArr);
+        if(currArr)
+        {
+          if(currArr[0])
+          {
+            if(currArr[0].tag == tag){
+              return currArr;
+            }
+          }
+        }
       }
     }
+    
   }
 
   CreateArrayOfData(arr: any[]){
@@ -179,15 +199,23 @@ export class StockDataComponent implements OnInit {
       for(let i in this.stockData){
         let currArray = Object.values(this.stockData[i])[1]
         for(let j in currArray){
-          data.push(currArray[j])
+          if (!data.includes(currArray[j]))
+          {
+            data.push(currArray[j])
+          }
         }
       }
 
       //This data should go into the graph
-      let tagData = _.filter(data, function(o) { return o.tag == tag && o.quarter == 1; });    
+      let tagData = _.filter(data, function(o) { return o.tag == tag && o.quarter == 1; });
+      tagData = _.uniqBy(tagData ,'ddate');
 
       if(tagData != null){
-        this.stockDataByTag.push([tag, tagData]);
+        if(!this.stockDataByTag.includes([tag, tagData]))
+        {
+          this.stockDataByTag.push([tag, tagData]);
+        }
+        
       }
       
       //console.log(tagData);    
